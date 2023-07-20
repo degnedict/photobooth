@@ -460,10 +460,11 @@ class Image {
                     throw new Exception('Cannot rotate image.');
                 }
             } else {
+                $bg_color = $this->resizeBgColor;
                 if (strlen($bg_color) === 7) {
                     $bg_color .= '00';
                 }
-                list($bg_r, $bg_g, $bg_b, $bg_a) = sscanf($this->resizeBgColor, '#%02x%02x%02x%02x');
+                list($bg_r, $bg_g, $bg_b, $bg_a) = sscanf($bg_color, '#%02x%02x%02x%02x');
 
                 // get old dimensions
                 $old_width = imagesx($image);
@@ -905,8 +906,8 @@ class Image {
                 $this->resizeRotation = $degrees;
                 $imageResource = self::rotateResizeImage($imageResource);
                 if (abs($degrees) != 90) {
-                    $width = intval(imagesx($imageResource));
-                    $height = intval(imagesy($imageResource));
+                    $width = imagesx($imageResource);
+                    $height = imagesy($imageResource);
                 }
             }
 
